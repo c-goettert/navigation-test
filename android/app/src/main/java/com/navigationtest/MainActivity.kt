@@ -4,6 +4,12 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import android.view.WindowInsetsController
+import androidx.core.view.WindowCompat
+import android.content.pm.ActivityInfo
 
 class MainActivity : ReactActivity() {
 
@@ -19,4 +25,17 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+      val window = window
+      WindowCompat.setDecorFitsSystemWindows(window, false)
+
+      window.decorView.systemUiVisibility =
+          View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+          View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+          View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+      super.onCreate(savedInstanceState)
+      requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
 }
